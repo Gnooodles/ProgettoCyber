@@ -35,8 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($stmt_check->num_rows > 0) {
             $messaggio = "Email già registrata.";
         } else {
-            // #TODO:Crittografia della password
-          
+            // Crittografia della password
+            $password = password_hash($password, PASSWORD_DEFAULT);
+
             $ruolo = "guest"; // ruolo predefinito
 
             // Inserimento utente

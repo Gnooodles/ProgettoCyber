@@ -31,8 +31,8 @@ $result = $stmt->get_result();
 if ($result->num_rows === 1) {
     $utente = $result->fetch_assoc();
 
-    // Controllo password #TODO: Sistemare che la password qui è in chiaro
-    if ($password === $utente['password']) {
+    // Controllo password precedentemente crittografata
+    if (password_verify($password, $utente['password'])) {
         // Login riuscito
         $_SESSION['email'] = $utente['email'];
         $_SESSION['ruolo'] = $utente['ruolo'];
