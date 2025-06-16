@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Verifica se l'utente è loggato
+// Verifica se l'utente è loggato, se non lo è rimanda a index.php
 if (!isset($_SESSION['email']) || !isset($_SESSION['ruolo'])) {
     header("Location: index.php");
     exit;
@@ -92,7 +92,7 @@ $conn->close();
         <button type="submit">Aggiungi nota</button>
     </form>
 
-    <!-- Elenco note con checkbox per eliminare --> #TODO: Sistemare che le note sono in chiaro
+    <!-- Elenco note con checkbox per eliminare #TODO: Sistemare che le note sono in chiaro --> 
     <form action="note.php" method="post">
         <?php if (count($note) > 0): ?>
             <h2>Note</h2>
