@@ -17,18 +17,32 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
+/* Titolo principale */
+
 h1 {
   text-align: center;
   margin-bottom: 1.5rem;
 }
 
-/* Form Login */
+/* Sottotitoli, ad esempio per "Note" */
+
+h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+/* Etichette dei form */
 
 form label {
   display: block;
   margin-top: 1rem;
   font-weight: bold;
 }
+
+/* Input per login e registrazione */
 
 form input {
   width: 100%;
@@ -38,7 +52,24 @@ form input {
   border-radius: 4px;
 }
 
-/* Bottone login */
+/* Area di testo per inserire nuove note */
+
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical; /* L'utente può ridimensionare */
+}
+
+/* Checkbox accanto alle note */
+
+form input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Bottone per login, registrazione, aggiunta ed eliminazione note */
 
 button {
   margin-top: 1.5rem;
@@ -56,12 +87,14 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Testo sotto il bottone login */
+/* Paragrafo sotto ai form */
 
 p {
   text-align: center;
   margin-top: 1rem;
 }
+
+/* Link: login, registrazione, logout */
 
 a {
   color: #4CAF50;
@@ -72,5 +105,26 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Questo è un commento in CSS */
+/* Singola nota nell’elenco */
+
+.nota {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Contenuto testuale della nota */
+
+.nota-contenuto {
+  flex-grow: 1;
+}
+
+/* Dettagli della nota: data, autore, gruppo */
+
+small {
+  color: #777;
+  font-size: 0.9em;
+}
 

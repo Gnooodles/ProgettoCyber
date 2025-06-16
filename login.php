@@ -12,7 +12,7 @@ $conn = new mysqli($host, $user, $pass, $dbname);
 
 // Controlla la connessione
 if ($conn->connect_error) {
-    die("Connessione al database fallita: " . $conn->connect_error);
+    die("Connessione fallita: " . $conn->connect_error);
 }
 
 // Recupera dati dal form
@@ -50,7 +50,7 @@ if ($result->num_rows === 1) {
 $conn->close();
 ?>
 
-<!-- Mostra errore in HTML (versione semplice) -->
+<!-- Mostra errore in HTML -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
