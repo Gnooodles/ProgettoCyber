@@ -105,7 +105,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Singola nota nell’elenco */
+/* Singola nota nell’elenco #TODO: Spostare checkbox a sx del testo */
 
 .nota {
   margin-bottom: 10px;

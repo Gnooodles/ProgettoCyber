@@ -92,7 +92,7 @@ $conn->close();
         <button type="submit">Aggiungi nota</button>
     </form>
 
-    <!-- Elenco note con checkbox per eliminare -->
+    <!-- Elenco note con checkbox per eliminare --> #TODO: Sistemare che le note sono in chiaro
     <form action="note.php" method="post">
         <?php if (count($note) > 0): ?>
             <h2>Note</h2>
