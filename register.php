@@ -36,14 +36,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $messaggio = "Email già registrata.";
         } else {
             // Crittografia della password
-            $password = password_hash($password, PASSWORD_DEFAULT);
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
             $ruolo = "guest"; // ruolo predefinito
 
             // Inserimento utente
             $sql_insert = "INSERT INTO utenti (email, password, ruolo) VALUES (?, ?, ?)";
             $stmt_insert = $conn->prepare($sql_insert);
-            $stmt_insert->bind_param("sss", $email, $password, $ruolo);
+            $stmt_insert->bind_param("sss", $email, $password_hash, $ruolo);
 
             if ($stmt_insert->execute()) {
                 header("Location: index.php?registrazione=ok");
