@@ -128,3 +128,33 @@ small {
   font-size: 0.9em;
 }
 
+/* Gestione banner per cookie */
+
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #4CAF50;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  z-index: 1000;
+}
+
+#cookie-banner button {
+  background: white;
+  color: #4CAF50;
+  border: none;
+  margin-left: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+#cookie-banner button:hover {
+  background: #f0f0f0;
+}
+
+

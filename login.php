@@ -36,7 +36,10 @@ if ($result->num_rows === 1) {
         // Login riuscito
         $_SESSION['email'] = $utente['email'];
         $_SESSION['ruolo'] = $utente['ruolo'];
-        
+
+        // Salva l'email dell'utente in un cookie valido per 30 giorni
+        setcookie("user_email", $email, time() + (86400 * 30), "/");
+
         // Reindirizzamento alla pagina delle note
         header("Location: note.php");
         exit;
