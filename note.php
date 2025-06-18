@@ -1,4 +1,9 @@
 <?php
+
+// Nascondi errori per la sicurezza
+error_reporting(0);         
+ini_set('display_errors', 0); // Disattiva la visualizzazione
+
 session_start();
 
 // Verifica se l'utente è loggato, se non lo è rimanda a index.php

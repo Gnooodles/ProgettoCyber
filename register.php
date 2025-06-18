@@ -1,4 +1,7 @@
 <?php
+// Nascondi errori per la sicurezza
+error_reporting(0);
+ini_set('display_errors', 0);
 
 // Connessione al database
 $host = 'localhost';
@@ -16,15 +19,27 @@ $messaggio = "";
 
 // Se il form è stato inviato
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Dati dal form
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    // Dati dal form (puliti e validati)
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Controllo password uguali
-    if ($password !== $confirm_password) {
+    // Validazione email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $messaggio = "Formato email non valido.";
+    }
+    // Numero caratteri password
+    elseif (strlen($password) < 6) {
+        $messaggio = "La password deve contenere almeno 6 caratteri.";
+    }
+    // Controllo password coincidano
+    elseif ($password !== $confirm_password) {
         $messaggio = "Le password non coincidono.";
-    } else {
+    }
+    else {
+        // Prevenzione XSS
+        $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+
         // Controllo se email già registrata
         $sql_check = "SELECT email FROM utenti WHERE email = ?";
         $stmt_check = $conn->prepare($sql_check);
@@ -49,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: index.php?registrazione=ok");
                 exit(); 
             } else {
-                $messaggio = "Errore nella registrazione: " . $stmt_insert->error;
+                $messaggio = "Errore nella registrazione. Riprova.";
             }
 
             $stmt_insert->close();
@@ -83,8 +98,8 @@ $conn->close();
         <input type="email" name="email" required> <!-- Campo input per l'email -->
 
         <label for="password">Password</label> 
-        <input type="password" name="password" required> <!-- Campo input per la password -->
-    
+        <input type="password" name="password" required minlength="6"> <!-- Campo input per la password -->
+
         <label for="confirm_password">Conferma Password</label> 
         <input type="password" name="confirm_password" required> <!-- Campo input per confermare la password -->
         

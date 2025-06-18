@@ -1,3 +1,9 @@
+<?php
+// Nascondi errori per la sicurezza
+error_reporting(0);         
+ini_set('display_errors', 0); // Disattiva la visualizzazione
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>

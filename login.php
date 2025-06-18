@@ -1,4 +1,9 @@
 <?php
+
+// Nascondi errori per la sicurezza
+error_reporting(0);         
+ini_set('display_errors', 0); // Disattiva la visualizzazione
+
 session_start();
 
 // Connessione al database
@@ -18,6 +23,14 @@ if ($conn->connect_error) {
 // Recupera dati dal form
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
+
+// Controllo email valida
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    die("Email non valida");
+}
+
+// Escaping per prevenire esecuzione codice html/javascript
+$email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 
 // Prepara e esegue la query per trovare l'utente
 $sql = "SELECT * FROM utenti WHERE email = ?";
