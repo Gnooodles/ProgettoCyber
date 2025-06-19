@@ -6,6 +6,8 @@ ini_set('display_errors', 0); // Disattiva la visualizzazione
 
 session_start();
 
+include 'db.php'; // File di connessione al database
+
 // Verifica se l'utente è loggato, se non lo è rimanda a index.php
 if (!isset($_SESSION['email']) || !isset($_SESSION['ruolo'])) {
     header("Location: index.php");
@@ -14,17 +16,6 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['ruolo'])) {
 
 $email = $_SESSION['email'];
 $ruolo = $_SESSION['ruolo'];
-
-// Connessione al database
-$host = 'localhost';
-$dbname = 'safe_notes'; 
-$user = 'root';     
-$pass = '';
-
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connessione fallita: " . $conn->connect_error);
-}
 
 // Inserimento nuova nota
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuova_nota'])) {
