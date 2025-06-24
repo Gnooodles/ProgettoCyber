@@ -1,25 +1,117 @@
-# ProgettoCyber
+# 🛡️ Safe Notes - Web App Sicura con Login, OTP e Note Condivise
 
-## Come eseguire il sito web con XAMPP
+Safe Notes è un'applicazione PHP per la gestione di note condivise tra utenti, con autenticazione a due fattori (2FA), ruoli differenziati e controllo della visibilità delle note. Include funzionalità di registrazione, login sicuro, creazione ed eliminazione note in base al ruolo utente.
 
-1. **Assicurati di avere XAMPP installato**  
-   Scarica e installa XAMPP dal sito ufficiale: https://www.apachefriends.org/index.html
+## 📦 Requisiti
 
-2. **Avvia XAMPP**  
-   Apri il pannello di controllo di XAMPP e avvia i servizi **Apache** e, se necessario, **MySQL**.
+- PHP >= 7.4
+- Composer
+- MySQL o MariaDB
+- Server locale (es. XAMPP, ecc.)
+- Libreria [RobThree/TwoFactorAuth](https://github.com/RobThree/TwoFactorAuth)
 
-3. **Posiziona i file del progetto**  
-   Copia la cartella `ProgettoCyber` nella directory `htdocs` di XAMPP.  
-   Su Mac, il percorso tipico è:  
-   `/Applications/XAMPP/xamppfiles/htdocs/ProgettoCyber`
+## 📁 Struttura dei file principali
 
-4. **Accedi al sito dal browser**  
-   Apri il browser e vai all’indirizzo:  
-   [http://localhost/ProgettoCyber](http://localhost/ProgettoCyber)
+```
+/
+├── index.php               # Pagina di login
+├── register.php            # Pagina di registrazione
+├── note.php                # Gestione delle note
+├── logout.php              # Logout utente
+├── verify_login.php        # Verifica OTP dopo login
+├── verify_registration.php # Verifica OTP dopo registrazione
+├── stile.css               # Stile CSS
+├── db.php                  # Connessione al database
+├── composer.json           # Dipendenze PHP
+└── README.md               
+```
 
-5. **(Opzionale) Configura il database**  
-   Se il progetto richiede un database:
-   - Apri [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
+## ⚙️ Installazione
 
-6. **Pronto!**  
-   Ora puoi utilizzare il sito web in locale tramite XAMPP.
+1. **Clona o scarica il progetto nella cartella `htdocs` di XAMPP o simile:**
+
+```bash
+cd /percorso/della/htdocs
+git clone https://github.com/Gnooodles/ProgettoCyber.git
+```
+
+2. **Posizionati nella cartella del progetto:**
+
+```bash
+cd ProgettoCyber
+```
+
+3. **Installa le dipendenze PHP con Composer:**
+
+```bash
+composer require robthree/twofactorauth
+```
+
+4. **Crea il database MySQL:**
+
+Apri **phpMyAdmin** o il tuo client MySQL e esegui:
+
+```sql
+CREATE DATABASE IF NOT EXISTS safe_notes;
+
+USE safe_notes;
+
+CREATE TABLE utenti (
+  email VARCHAR(255) PRIMARY KEY,
+  password VARCHAR(255) NOT NULL,
+  secret VARCHAR(255) NOT NULL,
+  ruolo ENUM('amministratore', 'gruppo1', 'gruppo2', 'guest') NOT NULL
+);
+
+DROP TABLE IF EXISTS note;
+
+CREATE TABLE note (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    autore_email VARCHAR(100) NOT NULL,
+    gruppo_visibilita ENUM('amministratore', 'gruppo1', 'gruppo2', 'guest') NOT NULL,
+    contenuto TEXT NOT NULL,
+    data_creazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (autore_email) REFERENCES utenti(email)
+);
+
+```
+
+5. **Aggiorna il file `db.php` con le credenziali del tuo database locale:**
+
+```php
+$host = 'localhost';
+$utente = 'root';
+$password = ''; // o la tua password se impostata
+$nomeDB = 'safe_notes';
+```
+
+## 🚀 Come usare l'app
+
+1. Avvia Apache e MySQL dal tuo pannello XAMPP.
+2. Crea i database e le tabelle come descritto sopra.
+3. Vai nel browser su `http://localhost/safe-notes/`.
+4. Registrati 
+  4.1 Ogni utente è registrto come guest
+  4.2 Può essere cambiato il ruolo da phpMyAdmin
+5. Scansiona il QR Code mostrato con Google Authenticator o simile.
+6. Inserisci il codice OTP per completare la registrazione.
+7. Effettua il login con email e password, poi inserisci l'OTP per accedere.
+8. Crea note visibili in base al tuo ruolo e gestiscile.
+
+## 🔐 Ruoli e Permessi
+
+| Ruolo          | Può vedere note di...                    | Può eliminare   |
+|----------------|------------------------------------------|-----------------|
+| amministratore | tutti                                    | tutte           |
+| gruppo1        | gruppo1                                  | solo le proprie |
+| gruppo2        | gruppo2                                  | solo le proprie |
+| guest          | solo guest                               | solo le proprie |
+
+
+## 📚 Librerie usate
+
+- [RobThree/TwoFactorAuth](https://github.com/RobThree/TwoFactorAuth) - OTP TOTP generator
+
+## 🧑‍💻 Autori
+
+Progetto sviluppato da Daniele Gnudi e Federico Battiato per l'esame di **Cybersecurity**.
