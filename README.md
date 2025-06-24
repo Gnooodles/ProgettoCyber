@@ -87,15 +87,15 @@ $nomeDB = 'safe_notes';
 
 ## 🚀 Come usare l'app
 
-1. Avvia Apache e MySQL dal tuo pannello XAMPP.
-2. Crea i database e le tabelle come descritto sopra.
-3. Vai nel browser su `http://localhost/safe-notes/`.
-4. Registrati 
-  4.1 Ogni utente è registrto come guest
-  4.2 Può essere cambiato il ruolo da phpMyAdmin
-5. Scansiona il QR Code mostrato con Google Authenticator o simile.
-6. Inserisci il codice OTP per completare la registrazione.
-7. Effettua il login con email e password, poi inserisci l'OTP per accedere.
+1. Avvia Apache e MySQL dal tuo pannello XAMPP.  
+2. Crea i database e le tabelle come descritto sopra.  
+3. Vai nel browser su `http://localhost/safe-notes/`.  
+4. Registrati  
+   4.1 Ogni utente è registrato come guest  
+   4.2 Il ruolo può essere cambiato da phpMyAdmin  
+5. Scansiona il QR Code mostrato con Google Authenticator o simile.  
+6. Inserisci il codice OTP per completare la registrazione.  
+7. Effettua il login con email e password, poi inserisci l'OTP per accedere.  
 8. Crea note visibili in base al tuo ruolo e gestiscile.
 
 ## 🔐 Ruoli e Permessi
