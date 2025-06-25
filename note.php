@@ -113,14 +113,14 @@ $conn->close();
     </script>
 
     <div class="container">
-
+        
+        <h1>Benvenuto, <?= htmlspecialchars($email) ?> (<?= htmlspecialchars($ruolo) ?>)</h1>
+        
         <!-- Mostra eventuali messaggi di errore -->
         <?php if (!empty($_SESSION['messaggio_note'])): ?>
         <p style="color: red;"><?= htmlspecialchars($_SESSION['messaggio_note']) ?></p>
         <?php unset($_SESSION['messaggio_note']); ?>
         <?php endif; ?>
-
-        <h1>Benvenuto, <?= htmlspecialchars($email) ?> (<?= htmlspecialchars($ruolo) ?>)</h1>
 
         <!-- Form per inserire una nuova nota -->
         <form action="note.php" method="post">
