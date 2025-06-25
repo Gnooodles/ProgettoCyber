@@ -23,6 +23,7 @@ Safe Notes è un'applicazione PHP per la gestione di note condivise tra utenti, 
 ├── stile.css               # Stile CSS
 ├── db.php                  # Connessione al database
 ├── composer.json           # Dipendenze PHP
+├── crypto.php              # Funzioni di crittografia
 └── README.md               
 ```
 
@@ -41,7 +42,7 @@ git clone https://github.com/Gnooodles/ProgettoCyber.git
 cd ProgettoCyber
 ```
 
-3. **Installa le dipendenze PHP con Composer:**
+3. **Installa le dipendenze PHP con Composer: (Non necessario, solo in caso di problemi con il QR)**
 
 ```bash
 composer require robthree/twofactorauth
@@ -49,7 +50,7 @@ composer require robthree/twofactorauth
 
 4. **Crea il database MySQL:**
 
-Apri **phpMyAdmin** o il tuo client MySQL e esegui:
+Apri **phpMyAdmin** o il tuo client MySQL ed esegui nella sezione SQL:
 
 ```sql
 CREATE DATABASE IF NOT EXISTS safe_notes;
@@ -89,7 +90,7 @@ $nomeDB = 'safe_notes';
 
 1. Avvia Apache e MySQL dal tuo pannello XAMPP.  
 2. Crea i database e le tabelle come descritto sopra.  
-3. Vai nel browser su `http://localhost/safe-notes/`.  
+3. Vai nel browser su `http://localhost/ProgettoCyber/`.  
 4. Registrati  
    4.1 Ogni utente è registrato come guest  
    4.2 Il ruolo può essere cambiato da phpMyAdmin  
@@ -111,6 +112,10 @@ $nomeDB = 'safe_notes';
 ## 📚 Librerie usate
 
 - [RobThree/TwoFactorAuth](https://github.com/RobThree/TwoFactorAuth) - OTP TOTP generator
+
+# 📝 Altre informazioni 
+
+- La parte relativa alla sicurezza con https e virtual host è stata testata su un server locale con XAMPP, ma non è implementata in questi file.
 
 ## 🧑‍💻 Autori
 
