@@ -113,7 +113,7 @@ $nomeDB = 'safe_notes';
 
 - [RobThree/TwoFactorAuth](https://github.com/RobThree/TwoFactorAuth) - OTP TOTP generator
 
-# 📝 Altre informazioni 
+## 📝 Altre informazioni 
 
 - La parte relativa alla sicurezza con https e virtual host è stata testata su un server locale con XAMPP, ma non è implementata in questi file.
 
