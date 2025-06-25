@@ -20,7 +20,7 @@ if (!isset($_SESSION['otp_email'])) {
 }
 
 $email = $_SESSION['otp_email'];
-$ruolo = $_SESSION['otp_ruolo'] ?? '';
+$ruolo = $_SESSION['otp_ruolo'];
 
 // Recupera il secret dal DB
 $stmt = $conn->prepare("SELECT secret, ruolo FROM utenti WHERE email = ?");
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         unset($_SESSION['otp_email'], $_SESSION['otp_ruolo']);
 
-        // Redirect alla pagina protetta
+        // Reindirizza alla pagina delle note
         header('Location: note.php');
         exit;
     } else {

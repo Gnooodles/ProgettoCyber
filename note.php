@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuova_nota'])) {
         $stmt->execute();
         $stmt->close();
     }
-    header("Location: note.php"); // Previene il reinvio del form dopo refresh
+    header("Location: note.php");
     exit;
 }
 
@@ -113,6 +113,7 @@ window.onload = function () {
 </script>
 
 <div class="container">
+    
     <h1>Benvenuto, <?= htmlspecialchars($email) ?> (<?= htmlspecialchars($ruolo) ?>)</h1>
 
     <?php if (!empty($_SESSION['messaggio_note'])): ?>
