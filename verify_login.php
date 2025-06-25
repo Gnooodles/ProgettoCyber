@@ -20,6 +20,7 @@ if (!isset($_SESSION['otp_email'])) {
 }
 
 $email = $_SESSION['otp_email'];
+$ruolo = $_SESSION['otp_ruolo'] ?? '';
 
 // Recupera il secret dal DB
 $stmt = $conn->prepare("SELECT secret, ruolo FROM utenti WHERE email = ?");
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['ruolo'] = $ruolo;
         $_SESSION['tfa_verified'] = true;
 
-        unset($_SESSION['otp_email']);
+        unset($_SESSION['otp_email'], $_SESSION['otp_ruolo']);
 
         // Redirect alla pagina protetta
         header('Location: note.php');

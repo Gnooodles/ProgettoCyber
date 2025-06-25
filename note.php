@@ -20,6 +20,7 @@ $ruolo = $_SESSION['ruolo'];
 // Inserimento nuova nota
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuova_nota'])) {
     $contenuto = trim($_POST['nuova_nota']);
+    $contenuto = htmlspecialchars($contenuto, ENT_QUOTES, 'UTF-8'); // Sicurezza contro XSS
     if ($contenuto !== '') {
         $sql = "INSERT INTO note (autore_email, gruppo_visibilita, contenuto) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
@@ -35,18 +36,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuova_nota'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['elimina_note'])) {
     if (isset($_POST['note_ids']) && is_array($_POST['note_ids'])) {
         $ids = array_map('intval', $_POST['note_ids']); // pulizia base
-        $id_list = implode(',', $ids);
 
-        // Solo l'amministratore può eliminare qualsiasi nota
-        if ($ruolo === 'amministratore') {
-            $sql = "DELETE FROM note WHERE id IN ($id_list)";
-        } else {
-            // Gli altri utenti possono eliminare solo le loro note #TODO: Print che non è possibile eliminare note di altri utenti
-            $sql = "DELETE FROM note WHERE id IN ($id_list) AND autore_email = '$email'";
+        if (count($ids) > 0) {
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            $types = str_repeat('i', count($ids));
+
+            if ($ruolo === 'amministratore') {
+                // Admin può eliminare tutte le note selezionate
+                $stmt = $conn->prepare("DELETE FROM note WHERE id IN ($placeholders)");
+                $stmt->bind_param($types, ...$ids);
+                $stmt->execute();
+
+            } else {
+                // Utente normale: elimina solo note proprie
+                $stmt = $conn->prepare("DELETE FROM note WHERE id IN ($placeholders) AND autore_email = ?");
+                $params = array_merge($ids, [$email]);
+                $stmt->bind_param($types . 's', ...$params);
+                $stmt->execute();
+
+                // Messaggio errore se alcune note non sono state eliminate
+                if ($stmt->affected_rows < count($ids)) {
+                    $_SESSION['messaggio_note'] = "Alcune note non sono state eliminate perché non ti appartengono.";
+                }
+            }
         }
-
-        $conn->query($sql);
     }
+
     header("Location: note.php");
     exit;
 }
@@ -98,6 +113,13 @@ $conn->close();
     </script>
 
     <div class="container">
+
+        <!-- Mostra eventuali messaggi di errore -->
+        <?php if (!empty($_SESSION['messaggio_note'])): ?>
+        <p style="color: red;"><?= htmlspecialchars($_SESSION['messaggio_note']) ?></p>
+        <?php unset($_SESSION['messaggio_note']); ?>
+        <?php endif; ?>
+
         <h1>Benvenuto, <?= htmlspecialchars($email) ?> (<?= htmlspecialchars($ruolo) ?>)</h1>
 
         <!-- Form per inserire una nuova nota -->
@@ -107,7 +129,7 @@ $conn->close();
             <button type="submit">Aggiungi nota</button>
         </form>
 
-        <!-- Elenco note con checkbox per eliminare #TODO: Sistemare che le note sono in chiaro --> 
+        <!-- Elenco note con checkbox per eliminare --> 
         <form action="note.php" method="post">
             <?php if (count($note) > 0): ?>
                 <h2>Note</h2>
