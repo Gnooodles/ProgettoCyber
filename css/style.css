@@ -113,7 +113,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Singola nota nell’elenco #TODO: Spostare checkbox a sx del testo */
+/* Singola nota nell’elenco */
 
 .nota {
   margin-bottom: 10px;
@@ -165,7 +165,7 @@ small {
   background: #f0f0f0;
 }
 
-/* Specifico per l'immagine QR nel verify_registration */
+/*  Immagine QR nel verify_registration */
 
 img.qr-code {
   display: block;
@@ -182,14 +182,14 @@ p[style*="color:red"] {
   margin-bottom: 0;
 }
 
-/* Form OTP (input + button) allineati e centrati */
+/* Form OTP (input + button) */
 
 form {
   max-width: 300px;
   margin: 0 auto;
 }
 
-/* Input OTP larghezza ridotta per un codice breve */
+/* Input OTP */
 
 form input[type="text"][name="otp_code"] {
   width: 100%;
